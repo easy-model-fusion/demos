@@ -1,4 +1,4 @@
-# Easy Model Fusion Project
+# Demo #1 Text to image
 
 ## Project setup
 ```

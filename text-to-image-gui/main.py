@@ -1,44 +1,67 @@
-# You can code freely in this file. It is the entry point of the application.
-# Uncomment this example if you have installed stabilityai/sdxl-turbo
-#
-#import torch
-#from diffusers import DiffusionPipeline
-#from sdk.models import ModelDiffusers, ModelsManagement
-#from sdk.options import Devices
+import threading
+import tkinter
+from tkinter import ttk
+import sdk
+import sv_ttk
 
+class Generator(threading.Thread):
 
-#class DemoTextToImg:
+    model: sdk.StabilityaiStableDiffusionXlBase1_0
 
-#    def __init__(self):
-#        model_stabilityai_name = "stabilityai/sdxl-turbo"
-#        model_stabilityai_path = "stabilityai/sdxl-turbo"
+    def __init__(self, image_label):
+        super().__init__()
+        self.image_label = image_label
+        self.model = sdk.StabilityaiStableDiffusionXlBase1_0()
 
-#        model_options = {
-#            'torch_dtype': torch.float16,
-#            'use_safetensors': True,
-#            'add_watermarker': False,
-#            'variant': "fp16"
-#        }
+    def run(self):
+        # Generate the image
+        image = self.generate_image(self.text)
 
-#        model_management = ModelsManagement()
-#        model_stabilityai = ModelDiffusers(
-#            model_name=model_stabilityai_name,
-#            model_path=model_stabilityai_path,
-#            model_class=DiffusionPipeline,
-#            device=Devices.GPU,
-#            **model_options)
+        # Display the image
+        self.image_label.configure(image=image)
+        self.image_label.image = image
 
-#        model_management.add_model(new_model=model_stabilityai)
-#        model_management.load_model(model_stabilityai_name)
+    def generate_image(self, text):
+        return self.model.generate_image(text)
 
-#        image = model_management.generate_prompt(
-#            prompt="Astronaut in a jungle, cold color palette, "
-#                   "muted colors, detailed, 8k",
-#            image_width=512,
-#            image_height=512
-#        ).images[0]
-#        image.show()
+class GUI(tkinter.Tk):
+    generator: Generator
+
+    def __init__(self):
+        super().__init__()
+
+    def generate(self):
+        pass
+
+    def setup(self):
+        self.title("Demo 1: text to image")
+
+        # Frame for the image placeholder
+        # Frame for the image placeholder
+        image_frame = ttk.Frame(self, width=300, height=200, relief="solid")
+        image_frame.pack(padx=10, pady=10)
+
+        # Placeholder for the image
+        self.image_label = ttk.Label(image_frame)
+        self.image_label.pack(padx=10, pady=10)
+
+        # Textbox
+        textbox = ttk.Entry(self, width=50)
+        textbox.pack(padx=10, pady=10)
+
+        # Generate button
+        generate_button = ttk.Button(self, text="Generate", command=self.generate)
+        generate_button.pack(padx=10, pady=10)
+
+        sv_ttk.set_theme("dark")
+
+        self.generator = Generator(self.image_label)
+
+    def run(self):
+        self.mainloop()
 
 
 if __name__ == '__main__':
-    print("Hello, EMF-World !")
+    gui = GUI()
+    gui.setup()
+    gui.run()

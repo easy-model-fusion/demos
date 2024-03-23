@@ -1,63 +1,107 @@
 import threading
 import tkinter
 from tkinter import ttk
+
 import sdk
 import sv_ttk
 
-class Generator(threading.Thread):
+from PIL import ImageTk
 
-    model: sdk.StabilityaiStableDiffusionXlBase1_0
-
-    def __init__(self, image_label):
-        super().__init__()
-        self.image_label = image_label
-        self.model = sdk.StabilityaiStableDiffusionXlBase1_0()
-
-    def run(self):
-        # Generate the image
-        image = self.generate_image(self.text)
-
-        # Display the image
-        self.image_label.configure(image=image)
-        self.image_label.image = image
-
-    def generate_image(self, text):
-        return self.model.generate_image(text)
 
 class GUI(tkinter.Tk):
-    generator: Generator
+    model: sdk.StabilityaiStableDiffusionXlBase10
 
     def __init__(self):
         super().__init__()
 
+    def load(self):
+        """
+        Load the model
+        """
+        self.progress_bar.start(10)
+        self.model = sdk.StabilityaiStableDiffusionXlBase10()
+        self.model.load_model()
+        self.progress_bar.stop()
+        self.enable_input()
+
     def generate(self):
-        pass
+        """
+        Generate an image from the text in the textbox
+        """
+        self.progress_bar.start(10)
+
+        # disable generate button & textbox
+        self.disable_input()
+
+        img = self.model.generate_prompt(prompt=self.textbox.get(), height=512, width=512)[0]
+
+        tkimg = ImageTk.PhotoImage(img[0])
+        self.image_label.config(image=tkimg)
+        self.image_label.image = tkimg
+
+        self.enable_input()
+        self.progress_bar.stop()
+
+    def start_generation(self):
+        """
+        Start the generation process in a new thread
+        """
+        generation_thread = threading.Thread(target=self.generate)
+        self.after(300, lambda: generation_thread.start())
+
+    def disable_input(self):
+        """
+        Disable the input fields
+        """
+        self.generate_button.config(state="disabled")
+        self.textbox.config(state="disabled")
+
+    def enable_input(self):
+        """
+        Enable the input fields
+        """
+        self.generate_button.config(state="normal")
+        self.textbox.config(state="normal")
 
     def setup(self):
+        """
+        Setup the GUI
+        """
         self.title("Demo 1: text to image")
 
         # Frame for the image placeholder
-        # Frame for the image placeholder
-        image_frame = ttk.Frame(self, width=300, height=200, relief="solid")
-        image_frame.pack(padx=10, pady=10)
+        self.image_frame = ttk.Frame(self, width=300, height=200, relief="solid")
+        self.image_frame.pack(padx=10, pady=10)
+
+        # Create a progress bar
+        self.progress_bar = ttk.Progressbar(self, mode='indeterminate', )
+        self.progress_bar.pack(pady=5)
 
         # Placeholder for the image
-        self.image_label = ttk.Label(image_frame)
+        self.image_label = ttk.Label(self.image_frame)
         self.image_label.pack(padx=10, pady=10)
 
         # Textbox
-        textbox = ttk.Entry(self, width=50)
-        textbox.pack(padx=10, pady=10)
+        self.textbox = ttk.Entry(self, width=50)
+        self.textbox.pack(padx=10, pady=10)
 
         # Generate button
-        generate_button = ttk.Button(self, text="Generate", command=self.generate)
-        generate_button.pack(padx=10, pady=10)
+        self.generate_button = ttk.Button(self, text="Generate", command=self.start_generation)
+        self.generate_button.pack(padx=10, pady=10)
+
+        self.disable_input()
 
         sv_ttk.set_theme("dark")
 
-        self.generator = Generator(self.image_label)
-
     def run(self):
+        """
+        Run the GUI
+        """
+        # Create and start a new thread to load the model
+        loading_thread = threading.Thread(target=self.load)
+        self.after(300, lambda: loading_thread.start())
+
+        # Run main loop
         self.mainloop()
 
 

@@ -8,8 +8,8 @@ models:
       tokenizers: []
       pipelinetag: text-to-image
       source: hugging_face
-      addtobinaryfile: false
-      isdownloaded: false
+      addtobinaryfile: true
+      isdownloaded: true
       version: "2023-10-30T16:03:47.000Z"
 name: text-to-image-gui
 sdk-tag: v1.1.0

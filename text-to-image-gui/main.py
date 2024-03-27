@@ -2,6 +2,8 @@ import threading
 import tkinter
 from tkinter import ttk
 
+import torch
+
 import sdk
 import sv_ttk
 
@@ -10,6 +12,12 @@ from PIL import ImageTk
 
 class GUI(tkinter.Tk):
     model: sdk.StabilityaiStableDiffusionXlBase10
+    model_options = {
+        'torch_dtype': torch.float16,
+        'use_safetensors': True,
+        'add_watermarker': False,
+        'variant': "fp16"
+    }
 
     def __init__(self):
         super().__init__()
@@ -19,7 +27,7 @@ class GUI(tkinter.Tk):
         Load the model
         """
         self.progress_bar.start(10)
-        self.model = sdk.StabilityaiStableDiffusionXlBase10()
+        self.model = sdk.StabilityaiStableDiffusionXlBase10(**self.model_options)
         self.model.load_model()
         self.progress_bar.stop()
         self.enable_input()

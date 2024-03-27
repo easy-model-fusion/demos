@@ -1,0 +1,20 @@
+description: This is a text-to-image-gui application, using the stabilityai/stable-diffusion-xl-base-1.0 model.
+models:
+    - name: stabilityai/stable-diffusion-xl-base-1.0
+      path: models\stabilityai\stable-diffusion-xl-base-1.0
+      module: diffusers
+      class: StableDiffusionXLPipeline
+      options: {}
+      tokenizers: []
+      pipelinetag: text-to-image
+      source: hugging_face
+      addtobinaryfile: true
+      isdownloaded: true
+      version: "2023-10-30T16:03:47.000Z"
+name: text-to-image-gui
+sdk-tag: v1.1.0
+version: 1.0.0
+build:
+  pyinstaller:
+    args:
+      - "--collect-data=sv_ttk"

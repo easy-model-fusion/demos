@@ -42,7 +42,7 @@ The model used is `stabilityai/stable-diffusion-xl-base-1.0` available [here](ht
 
 ## Demo 2: simple gui to generate conversation
 
-This demo is a simple GUI app that contains 
+This demo is a simple GUI app that contains a prompt, a button, and a text.
 The prompt asks the user to enter some text, and the button generates a conversation with the text entered.
 
 The model used is `microsoft/phi-2` available [here](https://huggingface.co/microsoft/phi-2).

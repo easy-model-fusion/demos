@@ -34,12 +34,17 @@ class GUI(tkinter.Tk):
         # disable generate button & textbox
         self.disable_input()
 
-        conversation = self.model.generate_prompt(prompt=self.textbox.get(), max_new_tokens=300)
+        prompt = " Instruct: " + self.textbox.get() + ".\nOutput:"
+
+        conversation = self.model.generate_prompt(prompt=prompt, max_new_tokens=100)
 
         self.textbox.delete(0, tkinter.END)
 
         generated_text = conversation[0]['generated_text']
-        self.conv_label.config(text=generated_text)
+
+        self.conv += generated_text + "\n"
+
+        self.conv_label.config(text=self.conv)
 
         self.enable_input()
         self.progress_bar.stop()
@@ -70,6 +75,8 @@ class GUI(tkinter.Tk):
         Setup the GUI
         """
         self.title("Demo 2: conversation")  # Changed title
+
+        self.conv = ""
 
         # Frame for the conversation display
         self.conversation_frame = ttk.Frame(self, width=600, height=400, relief="solid")  # Adjusted dimensions

@@ -4,9 +4,9 @@ build:
             - --collect-data=sv_ttk
 description: This is a tconversation application, using the microsoft/phi-2 model.
 models:
-    - addtobinaryfile: false
+    - addtobinaryfile: true
       class: PhiForCausalLM
-      isdownloaded: false
+      isdownloaded: true
       module: transformers
       name: microsoft/phi-2
       options: {}

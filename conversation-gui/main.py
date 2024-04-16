@@ -69,7 +69,7 @@ class GUI(tkinter.Tk):
         """
         Setup the GUI
         """
-        self.title("Demo 1: conversation")  # Changed title
+        self.title("Demo 2: conversation")  # Changed title
 
         # Frame for the conversation display
         self.conversation_frame = ttk.Frame(self, width=600, height=400, relief="solid")  # Adjusted dimensions

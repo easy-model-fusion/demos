@@ -2,8 +2,6 @@ import threading
 import tkinter
 from tkinter import ttk
 
-import torch
-
 import sdk
 import sv_ttk
 
@@ -44,7 +42,8 @@ class GUI(tkinter.Tk):
 
         self.conv += generated_text + "\n"
 
-        self.conv_label.config(text=self.conv)
+        self.conv_text.delete(1.0, tkinter.END)
+        self.conv_text.insert(tkinter.END, self.conv)
 
         self.enable_input()
         self.progress_bar.stop()
@@ -86,10 +85,16 @@ class GUI(tkinter.Tk):
         self.progress_bar = ttk.Progressbar(self, mode='indeterminate')
         self.progress_bar.pack(pady=5)
 
-        self.conv_label = ttk.Label(self.conversation_frame, wraplength=600)  # Added wraplength to handle long text
-        self.conv_label.pack(padx=10, pady=10)
-
         # Textbox for conversation display
+        self.conv_text = tkinter.Text(self.conversation_frame, wrap="word", width=70, height=20)
+        self.conv_text.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=True)
+
+        # Scrollbar for conversation text
+        conv_scroll = ttk.Scrollbar(self.conversation_frame, orient=tkinter.VERTICAL, command=self.conv_text.yview)
+        conv_scroll.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+        self.conv_text.config(yscrollcommand=conv_scroll.set)
+
+        # Textbox for input
         self.textbox = ttk.Entry(self, width=50)
         self.textbox.pack(padx=10, pady=10)
 

@@ -1,4 +1,4 @@
-# Demo #1 Text to image
+# Demo #3 Text Model to Image Model
 
 ## Project setup
 ```

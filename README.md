@@ -32,10 +32,15 @@ You then have two options to run the project:
     ```
    This will generate an executable file in the `dist` folder. Check docs for more information.
 
-## Demo 1: simple gui to generate stable diffusion images
+## Demo 1: Simple GUI to generate stable diffusion images
 
 This demo is a simple GUI app that contains a prompt, a button, and an image.
 The prompt asks the user to enter some text, and the button generates a diffusion image with the text entered.
 
 The model used is `stabilityai/stable-diffusion-xl-base-1.0` available [here](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0).
 
+## Demo 3: Simple GUI to generate stable diffusion images from a generated prompt
+
+This demo is also a simple GUI app that contains a prompt, a button, and an image.
+
+It allows users to generate a text prompt for an image using the `FredZhang7/anime-anything-promptgen-v2` available [here](<https://huggingface.co/FredZhang7/anime-anything-promptgen-v2>), the output is then fed to the  `stabilityai/stable-diffusion-xl-base-1.0` available [here](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0) for an image generation.

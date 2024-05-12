@@ -42,8 +42,12 @@ class GUI(tkinter.Tk):
 
         self.conv += generated_text + "\n"
 
+        # Set conversation text to normal to allow modification
+        self.conv_text.config(state="normal")
         self.conv_text.delete(1.0, tkinter.END)
         self.conv_text.insert(tkinter.END, self.conv)
+        # Disable conversation text again to prevent modification
+        self.conv_text.config(state="disabled")
 
         self.enable_input()
         self.progress_bar.stop()
@@ -73,7 +77,7 @@ class GUI(tkinter.Tk):
         """
         Setup the GUI
         """
-        self.title("Demo 2: conversation")  # Changed title
+        self.title("Demo 2: conversation")
 
         self.conv = ""
 
@@ -88,6 +92,7 @@ class GUI(tkinter.Tk):
         # Textbox for conversation display
         self.conv_text = tkinter.Text(self.conversation_frame, wrap="word", width=70, height=20)
         self.conv_text.pack(side=tkinter.LEFT, fill=tkinter.BOTH, expand=True)
+        self.conv_text.config(state="disabled")
 
         # Scrollbar for conversation text
         conv_scroll = ttk.Scrollbar(self.conversation_frame, orient=tkinter.VERTICAL, command=self.conv_text.yview)

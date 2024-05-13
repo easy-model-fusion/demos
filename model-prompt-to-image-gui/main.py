@@ -44,8 +44,8 @@ class GUI(tkinter.Tk):
     def load_txt(self):
         self.progress_bar.start(10)
         self.txt_model = sdk.Fredzhang7AnimeAnythingPromptgenV2(**self.txt_model_options)
-        self.model_manager_txt.add_model(new_model=self.txt_model)
         self.txt_model.create_pipeline(new_model=self.txt_model)
+        self.model_manager_txt.add_model(new_model=self.txt_model)
         self.model_manager_txt.load_model(self.txt_model.model_name)
         self.progress_bar.stop()
         self.enable_input()

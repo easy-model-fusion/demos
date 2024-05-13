@@ -2,13 +2,19 @@ import threading
 import tkinter
 from tkinter import ttk
 
+import torch
+
 import sdk
 import sv_ttk
 
 
 class GUI(tkinter.Tk):
     model: sdk.MicrosoftPhi2
-    model_options = {}
+    model_options = {
+        'torch_dtype': torch.float16,
+        'use_safetensors': True,
+        'add_watermarker': False,
+        'variant': "fp16"}
 
     def __init__(self):
         super().__init__()

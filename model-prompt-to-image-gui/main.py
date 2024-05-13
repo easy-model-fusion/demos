@@ -21,8 +21,7 @@ class GUI(tkinter.Tk):
     txt_model: sdk.Fredzhang7AnimeAnythingPromptgenV2
     txt_model_options = {
     }
-    model_manager_img = sdk.ModelsManagement()
-    model_manager_txt = sdk.ModelsManagement()
+    model_manager = sdk.ModelsManagement()
 
     def __init__(self):
         super().__init__()
@@ -36,8 +35,8 @@ class GUI(tkinter.Tk):
 
         self.progress_bar.start(10)
         self.img_model = sdk.StabilityaiStableDiffusionXlBase10(**self.img_model_options)
-        self.model_manager_img.add_model(new_model=self.img_model)
-        self.model_manager_img.load_model(self.img_model.model_name)
+        self.model_manager.add_model(new_model=self.img_model)
+        self.model_manager.load_model(self.img_model.model_name)
         self.image_output_event.set()
 
 
@@ -45,8 +44,8 @@ class GUI(tkinter.Tk):
         self.progress_bar.start(10)
         self.txt_model = sdk.Fredzhang7AnimeAnythingPromptgenV2(**self.txt_model_options)
         self.txt_model.create_pipeline()
-        self.model_manager_txt.add_model(new_model=self.txt_model)
-        self.model_manager_txt.load_model(self.txt_model.model_name)
+        self.model_manager.add_model(new_model=self.txt_model)
+        self.model_manager.load_model(self.txt_model.model_name)
         self.progress_bar.stop()
         self.enable_input()
 
@@ -60,7 +59,7 @@ class GUI(tkinter.Tk):
         self.disable_input()
         prompt = " Instruct: " + self.textbox.get() + ".\nOutput:"
 
-        conversation = self.model_manager_txt.generate_prompt(prompt=prompt, max_length=76,
+        conversation = self.model_manager.generate_prompt(prompt=prompt, max_length=76,
                                                               num_return_sequences=1, do_sample=True,
                                                               repetition_penalty=1.2, temperature=0.7, top_k=4,
                                                               early_stopping=True, num_beams=20,
@@ -77,7 +76,7 @@ class GUI(tkinter.Tk):
         self.run_img()
         output = generated_text.split('\nOutput: ')[1]
 
-        img = self.model_manager_img.generate_prompt(prompt=output, height=512, width=512,model_name = self.img_model.model_name)[0]
+        img = self.model_manager.generate_prompt(prompt=output, height=512, width=512,model_name = self.img_model.model_name)[0]
 
         tkimg = ImageTk.PhotoImage(img[0])
         self.image_label.config(image=tkimg)

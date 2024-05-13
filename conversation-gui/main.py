@@ -20,7 +20,8 @@ class GUI(tkinter.Tk):
         self.progress_bar.start(10)
         self.model = sdk.MicrosoftPhi2(**self.model_options)
         self.model.create_pipeline()
-        self.model.load_model()
+        self.model.add_model(new_model=self.model)
+        self.model.load_model(self.model.model_name)
         self.progress_bar.stop()
         self.enable_input()
 

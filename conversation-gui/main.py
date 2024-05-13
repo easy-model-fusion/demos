@@ -11,9 +11,9 @@ import sv_ttk
 class GUI(tkinter.Tk):
     model: sdk.MicrosoftPhi2
     model_options = {
-        'torch_dtype': "auto",
-        'use_safetensors': True,
-        'add_watermarker': False}
+        'torch_dtype': torch.float16,
+        'use_safetensors': True
+    }
 
     def __init__(self):
         super().__init__()
@@ -23,10 +23,10 @@ class GUI(tkinter.Tk):
         Load the model
         """
         self.progress_bar.start(10)
-        self.model = sdk.MicrosoftPhi2(**self.model_options)
+        self.model = sdk.MicrosoftPhi2()
+        self.model.set_model_pipeline_args(**self.model_options)
         self.model.create_pipeline()
-        self.model.add_model(new_model=self.model)
-        self.model.load_model(self.model.model_name)
+        self.model.load_model()
         self.progress_bar.stop()
         self.enable_input()
 
@@ -41,7 +41,7 @@ class GUI(tkinter.Tk):
 
         prompt = " Instruct: " + self.textbox.get() + ".\nOutput:"
 
-        conversation = self.model.generate_prompt(prompt=prompt, max_new_tokens=100, model_name = self.model.model_name)
+        conversation = self.model.generate_prompt(prompt=prompt, max_new_tokens=100)
 
         self.textbox.delete(0, tkinter.END)
 

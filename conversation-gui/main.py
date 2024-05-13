@@ -19,6 +19,7 @@ class GUI(tkinter.Tk):
         """
         self.progress_bar.start(10)
         self.model = sdk.MicrosoftPhi2(**self.model_options)
+        self.model.create_pipeline()
         self.model.load_model()
         self.progress_bar.stop()
         self.enable_input()
@@ -34,7 +35,7 @@ class GUI(tkinter.Tk):
 
         prompt = " Instruct: " + self.textbox.get() + ".\nOutput:"
 
-        conversation = self.model.generate_prompt(prompt=prompt, max_new_tokens=100)
+        conversation = self.model.generate_prompt(prompt=prompt, max_new_tokens=100, model_name = self.model.model_name)
 
         self.textbox.delete(0, tkinter.END)
 

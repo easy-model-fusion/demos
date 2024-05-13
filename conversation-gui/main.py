@@ -11,10 +11,9 @@ import sv_ttk
 class GUI(tkinter.Tk):
     model: sdk.MicrosoftPhi2
     model_options = {
-        'torch_dtype': torch.float16,
+        'torch_dtype': "auto",
         'use_safetensors': True,
-        'add_watermarker': False,
-        'variant': "fp16"}
+        'add_watermarker': False}
 
     def __init__(self):
         super().__init__()

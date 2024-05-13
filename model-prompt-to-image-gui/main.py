@@ -45,6 +45,7 @@ class GUI(tkinter.Tk):
         self.progress_bar.start(10)
         self.txt_model = sdk.Fredzhang7AnimeAnythingPromptgenV2(**self.txt_model_options)
         self.model_manager_txt.add_model(new_model=self.txt_model)
+        self.model_manager_txt.create_pipeline(new_model=self.txt_model)
         self.model_manager_txt.load_model(self.txt_model.model_name)
         self.progress_bar.stop()
         self.enable_input()
@@ -63,7 +64,7 @@ class GUI(tkinter.Tk):
                                                               num_return_sequences=1, do_sample=True,
                                                               repetition_penalty=1.2, temperature=0.7, top_k=4,
                                                               early_stopping=True, num_beams=20,
-                                                              truncation=True)
+                                                              truncation=True,model_name = self.txt_model.model_name)
         generated_text = conversation[0]['generated_text']
 
         # Update the conversation label with the generated text

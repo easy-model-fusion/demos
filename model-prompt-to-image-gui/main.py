@@ -77,7 +77,7 @@ class GUI(tkinter.Tk):
         self.run_img()
         output = generated_text.split('\nOutput: ')[1]
 
-        img = self.model_manager_img.generate_prompt(prompt=output, height=512, width=512)[0]
+        img = self.model_manager_img.generate_prompt(prompt=output, height=512, width=512,model_name = self.img_model.model_name)[0]
 
         tkimg = ImageTk.PhotoImage(img[0])
         self.image_label.config(image=tkimg)

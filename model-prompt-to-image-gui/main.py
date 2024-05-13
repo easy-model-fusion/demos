@@ -60,11 +60,7 @@ class GUI(tkinter.Tk):
         self.disable_input()
         prompt = " Instruct: " + self.textbox.get() + ".\nOutput:"
 
-        conversation = self.model_manager_txt.generate_prompt(prompt=prompt, max_length=76,
-                                                              num_return_sequences=1, do_sample=True,
-                                                              repetition_penalty=1.2, temperature=0.7, top_k=4,
-                                                              early_stopping=True, num_beams=20,
-                                                              truncation=True,model_name = self.txt_model.model_name)
+        conversation = self.model_manager_txt.generate_prompt(prompt=prompt, model_name = self.txt_model.model_name)
         generated_text = conversation[0]['generated_text']
 
         # Update the conversation label with the generated text

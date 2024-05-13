@@ -5,7 +5,7 @@ build:
 description: This is a text-to-image-gui application, using the stabilityai/stable-diffusion-xl-base-1.0 model.
 models:
     - name: stabilityai/stable-diffusion-xl-base-1.0
-      path: models\stabilityai\stable-diffusion-xl-base-1.0
+      path: models/stabilityai/stable-diffusion-xl-base-1.0
       module: diffusers
       class: StableDiffusionXLPipeline
       options: {}
@@ -17,14 +17,14 @@ models:
       version: "2023-10-30T16:03:47.000Z"
       accesstoken: ""
     - name: FredZhang7/anime-anything-promptgen-v2
-      path: models\FredZhang7\anime-anything-promptgen-v2\model
+      path: models/FredZhang7/anime-anything-promptgen-v2/model
       module: transformers
       class: GPT2LMHeadModel
-      options: { }
+      options: {}
       tokenizers:
-        - path: models\FredZhang7\anime-anything-promptgen-v2\AutoTokenizer
+        - path: models/FredZhang7/anime-anything-promptgen-v2/AutoTokenizer
           class: AutoTokenizer
-          options: { }
+          options: {}
       pipelinetag: text-generation
       source: hugging_face
       addtobinaryfile: true
@@ -32,6 +32,6 @@ models:
       version: "2023-03-16T19:33:55.000Z"
       accesstoken: ""
 name: text-to-image-gui
-sdk-tag: v1.1.0
+sdk-tag: v1.1.3
 update-suggested: true
 version: 1.0.0

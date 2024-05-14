@@ -55,6 +55,9 @@ class GUI(tkinter.Tk):
         """
         self.progress_bar.start(10)
 
+        # Clear prompt input
+        self.textbox.delete(0, tkinter.END)
+
         # disable generate button & textbox
         self.disable_input()
         prompt = " Instruct: " + self.textbox.get() + ".\nOutput:"

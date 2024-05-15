@@ -1,4 +1,4 @@
-# Demo #3 Text Model to Image Model
+# Demo #3 Text Prompts from Text Model to Image Generating Model
 
 ## Project setup
 ```

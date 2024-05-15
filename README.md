@@ -10,7 +10,7 @@ To run the projects, you need to have the `emf-cli` installed - see [How to inst
 Walk to the folder of the project you want to run and execute the following command:
 
 ```bash
-emf-cli tidy
+emf-cli install
 ```
 
 This will install the missing dependencies and models.
